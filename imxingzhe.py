@@ -13,7 +13,7 @@ class imxingzhe:
     def __init__(self):
         self.session = requests.session()
         self.session.verify = False
-        if os.getenv('DEBUG_MODE'):
+        if os.getenv('DEBUG_MODE') == 'True':
             self.session.proxies = {
                 'http': '127.0.0.1:8888',
                 'https': '127.0.0.1:8888'

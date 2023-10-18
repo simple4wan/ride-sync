@@ -10,7 +10,7 @@
 3. 复制`.env.example`为`.env`并配置好 导入平台 导出平台 以及对应平台的账号密码
 - 导出平台`EXPORT_PLATFORM`支持`igpsport`
 - 导入平台`IMPORT_PLATFORM`支持`imxingzhe`
-4. 执行`main.py` 如果没有异常提示表明正在同步
+4. 执行`python3 main.py` 如果没有异常提示表明正在同步
 5. 当同步出现异常脚本会自动退出，所以需要第三方服务守护进程 linux 推荐 supervisor
 
 **TODO**
