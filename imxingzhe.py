@@ -47,14 +47,21 @@ class imxingzhe:
         pass
 
     def import_fit(self, fit_file, title):
+        device_list = {
+            'igpsport': 3,
+            'onelap': 4,
+        }
+        if os.getenv('EXPORT_PLATFORM') not in device_list:
+            raise Exception('暂不支持导入该平台数据')
         file = {
             'upload_file_name': fit_file
         }
         params = {
             'title': title,
-            'device': 3,
+            'device': device_list[os.getenv('EXPORT_PLATFORM')],
             'sport': 3
         }
+
         url = 'https://www.imxingzhe.com/api/v4/upload_fits'
         response = self.session.post(url, data=params, files=file)
         content = response.json()

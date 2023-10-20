@@ -36,16 +36,17 @@ class igpsport:
         for activity in reversed(content['item']):
             activity_list.append({
                 'ride_id': activity['RideId'],
-                'title': activity['StartTimeString'] + activity['Title']
+                'title': activity['StartTimeString'] + activity['Title'],
+                'origin_activity': activity,
             })
         return activity_list
 
-    def export_fit(self, ride_id):
-        url = 'https://my.igpsport.com/fit/activity?type=0&rideid=' + ride_id
+    def export_fit(self, activity):
+        url = 'https://my.igpsport.com/fit/activity?type=0&rideid=' + str(activity['RideId'])
         response = self.session.get(url)
         content = response.content
         if response.status_code != 200:
-            raise Exception('迹驰导出fit文件失败：' + ride_id)
+            raise Exception('迹驰导出fit文件失败：' + str(activity['RideId']))
         return content
 
     def import_fit(self, fit_file, title):

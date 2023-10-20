@@ -8,6 +8,7 @@ import urllib3
 from dotenv import load_dotenv
 from igpsport import igpsport
 from imxingzhe import imxingzhe
+from onelap import onelap
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -19,6 +20,7 @@ def main():
     platform_list = {
         'igpsport': igpsport(),
         'imxingzhe': imxingzhe(),
+        'onelap': onelap(),
     }
     if export_platform not in platform_list:
         raise Exception('导出平台配置不正确')
@@ -35,7 +37,7 @@ def main():
         activity_list = export_platform_obj.get_activity_list()
         for activity in activity_list:
             if activity['ride_id'] > last_activity_id:
-                fit_file = export_platform_obj.export_fit(str(activity['ride_id']))
+                fit_file = export_platform_obj.export_fit(activity['origin_activity'])
                 import_platform_obj.import_fit(fit_file, activity['title'])
                 last_activity_id = activity['ride_id']
         time.sleep(60)
