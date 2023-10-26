@@ -1,0 +1,45 @@
+name: 'Run manually'
+
+on:
+  workflow_dispatch:
+    inputs:
+      exportPlatform:
+        description: 'Activities exported from:'
+        required: true
+        default: 'igpsport'
+        type: choice
+        options:
+          - igpsport
+          - onelap
+      importPlatform:
+        description: 'Activities to be imported into:'
+        required: true
+        default: 'imxingzhe'
+        type: choice
+        options:
+          - imxingzhe
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip' # caching pip dependencies
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Run
+      env:
+        EXPORT_PLATFORM: ${{ inputs.exportPlatform }}
+        IMPORT_PLATFORM: ${{ inputs.importPlatform }}
+        IGPSPORT_USERNAME: ${{ secrets.IGPSPORT_USERNAME }}
+        IGPSPORT_PASSWORD: ${{ secrets.IGPSPORT_PASSWORD }}
+        IMXINGZHE_USERNAME: ${{ secrets.IMXINGZHE_USERNAME }}
+        IMXINGZHE_PASSWORD: ${{ secrets.IMXINGZHE_PASSWORD }}
+        ONELAP_USERNAME: ${{ secrets.ONELAP_USERNAME }}
+        ONELAP_PASSWORD: ${{ secrets.ONELAP_PASSWORD }}
+      run: python3 main.py
