@@ -23,3 +23,5 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+
+*.tmp
